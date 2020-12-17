@@ -2,6 +2,7 @@ library(ggplot2)
 library(plotly)
 library(tidyverse)
 library(htmlwidgets)
+library(extrafont)
 
 # Import data
 data <- read.csv("data.csv")
@@ -70,12 +71,14 @@ barChart <-
     text = paste(HR, "\n",
                  Category, ":", n)
   )) + geom_bar(stat = "identity") +
+  theme(text = element_text(family = 'Avenir Next',
+                            color = "#4C4C4C"),) +
   geom_text(
     data = text_labels,
     aes(label = n),
     size = 3,
     check_overlap = TRUE,
-    color = "#6E6E5C",
+    color = "#4C4C4C",
     position = position_stack(vjust = 0.5) # label in center of bar
   ) +
   coord_flip()
@@ -84,6 +87,7 @@ barChart <-
   barChart + scale_fill_manual(values = c("#267300", "#02E5A9", "#FFFF00", "#FFAA00", "#E60000")) +
   ggtitle("Hydrologic Region Summary") +
   labs(x = "Hydrologic Region", y = "% of wells by estimates slope (labels show count)", fill = "Estimated Trends")
+
 
 p <- ggplotly(barChart, tooltip = "text")
 
