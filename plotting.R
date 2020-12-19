@@ -2,7 +2,20 @@ library(ggplot2)
 library(plotly)
 library(tidyverse)
 library(htmlwidgets)
+library(showtext)
 library(extrafont)
+
+font_add_google(
+  name = "Nunito",
+  family = "nunito",
+  regular.wt = 400,
+  bold.wt = 700,
+  repo = "http://fonts.gstatic.com/",
+  db_cache = TRUE,
+  handle = curl::new_handle()
+)
+
+showtext_auto()
 
 # Import data
 data <- read.csv("data.csv")
@@ -71,12 +84,11 @@ barChart <-
     text = paste(HR, "\n",
                  Category, ":", n)
   )) + geom_bar(stat = "identity") +
-  theme(text = element_text(family = 'Avenir Next',
-                            color = "#4C4C4C"),) +
+  theme(title=element_text(family="nunito", size = 10))+
   geom_text(
     data = text_labels,
-    aes(label = n),
     size = 3,
+    aes(label = n),
     check_overlap = TRUE,
     color = "#4C4C4C",
     position = position_stack(vjust = 0.5) # label in center of bar
@@ -86,8 +98,10 @@ barChart <-
 barChart <-
   barChart + scale_fill_manual(values = c("#267300", "#02E5A9", "#FFFF00", "#FFAA00", "#E60000")) +
   ggtitle("Hydrologic Region Summary") +
-  labs(x = "Hydrologic Region", y = "% of wells by estimates slope (labels show count)", fill = "Estimated Trends")
-
+  labs(x = "",
+       y = "% of wells by estimates slope (labels show count)",
+       fill = "Estimated Trends",
+       color = "#4C4C4C")
 
 p <- ggplotly(barChart, tooltip = "text")
 
