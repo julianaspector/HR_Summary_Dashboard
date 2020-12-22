@@ -84,7 +84,9 @@ barChart <-
     text = paste(HR, "\n",
                  Category, ":", n)
   )) + geom_bar(stat = "identity") +
-  theme(title=element_text(family="nunito", size = 10))+
+  theme(
+    text=element_text(family="nunito"),
+    title = element_text(size=11))+
   geom_text(
     data = text_labels,
     size = 3,
@@ -98,10 +100,12 @@ barChart <-
 barChart <-
   barChart + scale_fill_manual(values = c("#267300", "#02E5A9", "#FFFF00", "#FFAA00", "#E60000")) +
   ggtitle("Hydrologic Region Summary") +
-  labs(x = "",
-       y = "% of wells by estimates slope (labels show count)",
-       fill = "Estimated Trends",
-       color = "#4C4C4C")
+  labs(
+    x = "",
+    y = "% of wells by estimates slope (labels show count)",
+    fill = "Estimated Trends",
+    color = "#4C4C4C"
+  )
 
 p <- ggplotly(barChart, tooltip = "text")
 
